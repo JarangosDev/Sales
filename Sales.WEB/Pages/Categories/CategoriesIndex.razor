@@ -3,9 +3,9 @@
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
 
-<h3>Países</h3>
+<h3>Categorías</h3>
 
-<a class="btn btn-primary mb-3" href="/countries/create">Nuevo País</a>
+<a class="btn btn-primary mb-3" href="/categories/create">Nueva Categoría</a>
 <GenericList MyList="Categories">
     <Body>
         <table class="table table-striped">
@@ -27,7 +27,7 @@
                             @category.ProdCategoryNumber
                         </td>
                         <td>
-                            <a class="btn btn-warning" href="/countries/edit/@category.Id">Editar</a>
+                            <a class="btn btn-warning" href="/categories/edit/@category.Id">Editar</a>
                             <button class="btn btn-danger" @onclick=@(()=> DeleteAsync(category.Id))>Borrar</button>
                         </td>
                     </tr>

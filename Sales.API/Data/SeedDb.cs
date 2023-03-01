@@ -16,7 +16,7 @@ namespace Sales.API.Data
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckCountriesAsync();
-            //await CheckCategoriesAsync();
+            await CheckCategoriesAsync();
         }
 
         private async Task CheckCountriesAsync()
@@ -84,7 +84,7 @@ namespace Sales.API.Data
                 await _context.SaveChangesAsync();
             }  
         }
-        /*
+        
         private async Task CheckCategoriesAsync()
         {
             if (!_context.Categories.Any())
@@ -140,7 +140,7 @@ namespace Sales.API.Data
                 await _context.SaveChangesAsync();
             }
         }
-        */
+        
     }
 }
 
