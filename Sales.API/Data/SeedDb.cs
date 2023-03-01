@@ -16,6 +16,7 @@ namespace Sales.API.Data
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckCountriesAsync();
+            //await CheckCategoriesAsync();
         }
 
         private async Task CheckCountriesAsync()
@@ -83,6 +84,63 @@ namespace Sales.API.Data
                 await _context.SaveChangesAsync();
             }  
         }
+        /*
+        private async Task CheckCategoriesAsync()
+        {
+            if (!_context.Categories.Any())
+            {
+                _context.Categories.Add(new Category
+                {
+                    Name = "Calzado",
+                    ProdCategory = new List<ProdCategory>()
+            {
+                new ProdCategory()
+                {
+                    Name = "Calzado Deportivo",
+                    Products = new List<Product>() {
+                        new Product() { Name = "Chandál" },
+                        new Product() { Name = "Gucci" },
+                        new Product() { Name = "Prada" },
+                        new Product() { Name = "Chevinong" },
+                    }
+                },
+                new ProdCategory()
+                {
+                    Name = "Calzado Clásico",
+                    Products = new List<Product>() {
+                        new Product() { Name = "Negros" },
+                        new Product() { Name = "Tipo ballet" },
+                    }
+                },
+            }
+                });
+                _context.Categories.Add(new Category
+                {
+                    Name = "Ropa",
+                    ProdCategory = new List<ProdCategory>()
+            {
+                new ProdCategory()
+                {
+                    Name = "De baile",
+                    Products = new List<Product>() {
+                        new Product() { Name = "Ballet" },
+                        new Product() { Name = "Tango" },
+                    }
+                },
+                new ProdCategory()
+                {
+                    Name = "Formal",
+                    Products = new List<Product>() {
+                        new Product() { Name = "Smoking" },
+                        new Product() { Name = "Chandales" },
+                    }
+                },
+            }
+                });
+                await _context.SaveChangesAsync();
+            }
+        }
+        */
     }
 }
 
