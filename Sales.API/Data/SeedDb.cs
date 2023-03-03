@@ -116,7 +116,7 @@ namespace Sales.API.Data
                 });
                 _context.Categories.Add(new Category
                 {
-                    Name = "Perfumeria",
+                    Name = "Perfumería",
                     ProdCategory = new List<ProdCategory>()
             {
                 new ProdCategory()
@@ -133,6 +133,29 @@ namespace Sales.API.Data
                     Products = new List<Product>() {
                         new Product() { Name = "Verano" },
                         new Product() { Name = "Carmelia" },
+                    }
+                },
+            }
+                });
+                _context.Categories.Add(new Category
+                {
+                    Name = "Tecnología",
+                    ProdCategory = new List<ProdCategory>()
+            {
+                new ProdCategory()
+                {
+                    Name = "Computadores",
+                    Products = new List<Product>() {
+                        new Product() { Name = "HP" },
+                        new Product() { Name = "Lenovo" },
+                    }
+                },
+                new ProdCategory()
+                {
+                    Name = "Celulares",
+                    Products = new List<Product>() {
+                        new Product() { Name = "Iphone" },
+                        new Product() { Name = "Samsung" },
                     }
                 },
             }
