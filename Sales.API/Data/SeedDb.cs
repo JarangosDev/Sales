@@ -116,23 +116,23 @@ namespace Sales.API.Data
                 });
                 _context.Categories.Add(new Category
                 {
-                    Name = "Ropa",
+                    Name = "Perfumeria",
                     ProdCategory = new List<ProdCategory>()
             {
                 new ProdCategory()
                 {
-                    Name = "De baile",
+                    Name = "Dulce",
                     Products = new List<Product>() {
-                        new Product() { Name = "Ballet" },
-                        new Product() { Name = "Tango" },
+                        new Product() { Name = "Red One" },
+                        new Product() { Name = "Pasion" },
                     }
                 },
                 new ProdCategory()
                 {
-                    Name = "Formal",
+                    Name = "Cítrico",
                     Products = new List<Product>() {
-                        new Product() { Name = "Smoking" },
-                        new Product() { Name = "Chandales" },
+                        new Product() { Name = "Verano" },
+                        new Product() { Name = "Carmelia" },
                     }
                 },
             }
