@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sales.API.Data;
 
@@ -10,9 +11,11 @@ using Sales.API.Data;
 namespace Sales.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230301040921_AddCategories")]
+    partial class AddCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +42,7 @@ namespace Sales.API.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Sales.Shared.Entities.City", b =>
@@ -87,54 +90,6 @@ namespace Sales.API.Migrations
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("Sales.Shared.Entities.ProdCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId", "Name")
-                        .IsUnique();
-
-                    b.ToTable("ProdCategory");
-                });
-
-            modelBuilder.Entity("Sales.Shared.Entities.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("ProdCategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProdCategoryId", "Name")
-                        .IsUnique();
-
-                    b.ToTable("Product");
-                });
-
             modelBuilder.Entity("Sales.Shared.Entities.State", b =>
                 {
                     b.Property<int>("Id")
@@ -170,28 +125,6 @@ namespace Sales.API.Migrations
                     b.Navigation("State");
                 });
 
-            modelBuilder.Entity("Sales.Shared.Entities.ProdCategory", b =>
-                {
-                    b.HasOne("Sales.Shared.Entities.Category", "Category")
-                        .WithMany("ProdCategory")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Sales.Shared.Entities.Product", b =>
-                {
-                    b.HasOne("Sales.Shared.Entities.ProdCategory", "ProdCategory")
-                        .WithMany("Products")
-                        .HasForeignKey("ProdCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProdCategory");
-                });
-
             modelBuilder.Entity("Sales.Shared.Entities.State", b =>
                 {
                     b.HasOne("Sales.Shared.Entities.Country", "Country")
@@ -203,19 +136,9 @@ namespace Sales.API.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("Sales.Shared.Entities.Category", b =>
-                {
-                    b.Navigation("ProdCategory");
-                });
-
             modelBuilder.Entity("Sales.Shared.Entities.Country", b =>
                 {
                     b.Navigation("States");
-                });
-
-            modelBuilder.Entity("Sales.Shared.Entities.ProdCategory", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Sales.Shared.Entities.State", b =>

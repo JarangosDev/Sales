@@ -2,17 +2,20 @@
 
 namespace Sales.Shared.Entities
 {
-    public class City
+    public class ProdCategory
     {
-
         public int Id { get; set; }
 
-        [Display(Name = "Ciudad")]
+        [Display(Name = "Categoria Producto")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [MaxLength(100, ErrorMessage = "El campo {0} no puede tener mas de {1} caractéres.")]
         public string Name { get; set; } = null!;
 
-        public int StateId { get; set; }
-        public State? State { get; set; }
+        public int CategoryId { get; set; }
+        public Category? Category { get; set; }
+        public ICollection<Product>? Products { get; set; }
+
+        public int ProductNumber => Products == null ? 0 : Products.Count;
+
     }
 }
