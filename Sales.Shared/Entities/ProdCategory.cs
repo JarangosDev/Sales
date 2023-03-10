@@ -12,7 +12,7 @@ namespace Sales.Shared.Entities
         public string Name { get; set; } = null!;
 
         public int CategoryId { get; set; }
-        public Category? Category { get; set; }
+        public Category? Categories { get; set; }
         public ICollection<Product>? Products { get; set; }
 
         public int ProductNumber => Products == null ? 0 : Products.Count;

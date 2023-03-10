@@ -12,9 +12,9 @@ namespace Sales.API.Data
         }
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<Category> ProdCategories { get; set; }
+        public DbSet<ProdCategory> ProdCategories { get; set; }
 
-        public DbSet<Category> Products { get; set; }
+        public DbSet<Product> Products { get; set; }
         public  DbSet<City> Cities { get; set; }
 
         public DbSet<Country> Countries { get; set; }

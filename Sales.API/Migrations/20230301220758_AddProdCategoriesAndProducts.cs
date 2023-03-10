@@ -16,20 +16,20 @@ namespace Sales.API.Migrations
 
             migrationBuilder.RenameTable(
                 name: "Categories",
-                newName: "Category");
+                newName: "Categories");
 
             migrationBuilder.RenameIndex(
                 name: "IX_Categories_Name",
-                table: "Category",
+                table: "Categories",
                 newName: "IX_Category_Name");
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Category",
-                table: "Category",
+                table: "Categories",
                 column: "Id");
 
             migrationBuilder.CreateTable(
-                name: "ProdCategory",
+                name: "ProdCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -43,7 +43,7 @@ namespace Sales.API.Migrations
                     table.ForeignKey(
                         name: "FK_ProdCategory_Category_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -63,14 +63,14 @@ namespace Sales.API.Migrations
                     table.ForeignKey(
                         name: "FK_Product_ProdCategory_ProdCategoryId",
                         column: x => x.ProdCategoryId,
-                        principalTable: "ProdCategory",
+                        principalTable: "ProdCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProdCategory_CategoryId_Name",
-                table: "ProdCategory",
+                table: "ProdCategories",
                 columns: new[] { "CategoryId", "Name" },
                 unique: true);
 
@@ -88,14 +88,14 @@ namespace Sales.API.Migrations
                 name: "Product");
 
             migrationBuilder.DropTable(
-                name: "ProdCategory");
+                name: "ProdCategories");
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_Category",
-                table: "Category");
+                table: "Categories");
 
             migrationBuilder.RenameTable(
-                name: "Category",
+                name: "Categories",
                 newName: "Categories");
 
             migrationBuilder.RenameIndex(

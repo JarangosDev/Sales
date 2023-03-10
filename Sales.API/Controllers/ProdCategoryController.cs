@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Sales.API.Data;
 using Sales.Shared.Entities;
@@ -7,11 +6,12 @@ using Sales.Shared.Entities;
 namespace Sales.API.Controllers
 {
     [ApiController]
-    [Route("/api/categories")]
-    public class CategoriesController : ControllerBase
+    [Route("/api/prodcategories")]
+    public class ProdCategoriesController : ControllerBase
     {
         private readonly DataContext _context;
-        public CategoriesController(DataContext context)
+
+        public ProdCategoriesController(DataContext context)
         {
             _context = context;
         }
@@ -19,62 +19,57 @@ namespace Sales.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _context.Categories
-                .Include(x => x.ProdCategories)
-                .ToListAsync());
-        }
-        [HttpGet("full")]
-        public async Task<IActionResult> GetFullAsync()
-        {
-            return Ok(await _context.Categories
-                .Include(x => x.ProdCategories!)
-                .ThenInclude(x => x.Products)
+            return Ok(await _context.ProdCategories
+                .Include(x => x.Products)
                 .ToListAsync());
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetAsync(int id)
         {
-            var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
-            if (category == null)
+            var prodCategories = await _context.ProdCategories
+                .Include(x => x.Products)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if (prodCategories == null)
             {
                 return NotFound();
             }
-            return Ok(category);
+
+            return Ok(prodCategories);
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostAsync(Category category)
+        public async Task<ActionResult> PostAsync(ProdCategory prodCategories)
         {
             try
             {
-                _context.Add(category);
+                _context.Add(prodCategories);
                 await _context.SaveChangesAsync();
-                return Ok(category);
+                return Ok(prodCategories);
             }
             catch (DbUpdateException dbUpdateException)
             {
                 if (dbUpdateException.InnerException!.Message.Contains("duplicate"))
                 {
-                    return BadRequest("Ya existe una categoría con el mismo nombre.");
+                    return BadRequest("Ya existe una ProdCategories con el mismo nombre.");
                 }
+
                 return BadRequest(dbUpdateException.Message);
             }
             catch (Exception exception)
             {
                 return BadRequest(exception.Message);
             }
-
         }
 
         [HttpPut]
-        public async Task<ActionResult> PutAsync(Category category)
+        public async Task<ActionResult> PutAsync(ProdCategory prodCategories)
         {
             try
             {
-                _context.Update(category);
+                _context.Update(prodCategories);
                 await _context.SaveChangesAsync();
-                return Ok(category);
+                return Ok(prodCategories);
             }
             catch (DbUpdateException dbUpdateException)
             {
@@ -82,24 +77,25 @@ namespace Sales.API.Controllers
                 {
                     return BadRequest("Ya existe una categoría con el mismo nombre.");
                 }
+
                 return BadRequest(dbUpdateException.Message);
             }
             catch (Exception exception)
             {
                 return BadRequest(exception.Message);
             }
-
         }
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var country = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
-            if (country == null)
+            var prodCategories = await _context.States.FirstOrDefaultAsync(x => x.Id == id);
+            if (prodCategories == null)
             {
                 return NotFound();
             }
-            _context.Remove(country);
+
+            _context.Remove(prodCategories);
             await _context.SaveChangesAsync();
             return NoContent();
         }

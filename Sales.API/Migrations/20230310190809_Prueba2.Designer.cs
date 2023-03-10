@@ -11,8 +11,8 @@ using Sales.API.Data;
 namespace Sales.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230301040921_AddCategories")]
-    partial class AddCategories
+    [Migration("20230310190809_Prueba2")]
+    partial class Prueba2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,6 +90,54 @@ namespace Sales.API.Migrations
                     b.ToTable("Countries");
                 });
 
+            modelBuilder.Entity("Sales.Shared.Entities.ProdCategories", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId", "Name")
+                        .IsUnique();
+
+                    b.ToTable("ProdCategories");
+                });
+
+            modelBuilder.Entity("Sales.Shared.Entities.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("ProdCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProdCategoryId", "Name")
+                        .IsUnique();
+
+                    b.ToTable("Products");
+                });
+
             modelBuilder.Entity("Sales.Shared.Entities.State", b =>
                 {
                     b.Property<int>("Id")
@@ -125,6 +173,28 @@ namespace Sales.API.Migrations
                     b.Navigation("State");
                 });
 
+            modelBuilder.Entity("Sales.Shared.Entities.ProdCategories", b =>
+                {
+                    b.HasOne("Sales.Shared.Entities.Categories", "Categories")
+                        .WithMany("ProdCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categories");
+                });
+
+            modelBuilder.Entity("Sales.Shared.Entities.Product", b =>
+                {
+                    b.HasOne("Sales.Shared.Entities.ProdCategories", "ProdCategories")
+                        .WithMany("Products")
+                        .HasForeignKey("ProdCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProdCategories");
+                });
+
             modelBuilder.Entity("Sales.Shared.Entities.State", b =>
                 {
                     b.HasOne("Sales.Shared.Entities.Country", "Country")
@@ -136,9 +206,19 @@ namespace Sales.API.Migrations
                     b.Navigation("Country");
                 });
 
+            modelBuilder.Entity("Sales.Shared.Entities.Categories", b =>
+                {
+                    b.Navigation("ProdCategories");
+                });
+
             modelBuilder.Entity("Sales.Shared.Entities.Country", b =>
                 {
                     b.Navigation("States");
+                });
+
+            modelBuilder.Entity("Sales.Shared.Entities.ProdCategories", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Sales.Shared.Entities.State", b =>

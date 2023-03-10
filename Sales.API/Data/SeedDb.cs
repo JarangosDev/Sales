@@ -1,6 +1,4 @@
-﻿using Microsoft.OpenApi.Any;
-using Sales.API.Migrations;
-using Sales.Shared.Entities;
+﻿using Sales.Shared.Entities;
 
 namespace Sales.API.Data
 {
@@ -82,9 +80,9 @@ namespace Sales.API.Data
             }
                 });
                 await _context.SaveChangesAsync();
-            }  
+            }
         }
-        
+
         private async Task CheckCategoriesAsync()
         {
             if (!_context.Categories.Any())
@@ -92,7 +90,7 @@ namespace Sales.API.Data
                 _context.Categories.Add(new Category
                 {
                     Name = "Calzado",
-                    ProdCategory = new List<ProdCategory>()
+                    ProdCategories = new List<ProdCategory>()
             {
                 new ProdCategory()
                 {
@@ -117,7 +115,7 @@ namespace Sales.API.Data
                 _context.Categories.Add(new Category
                 {
                     Name = "Perfumería",
-                    ProdCategory = new List<ProdCategory>()
+                    ProdCategories = new List<ProdCategory>()
             {
                 new ProdCategory()
                 {
@@ -140,7 +138,7 @@ namespace Sales.API.Data
                 _context.Categories.Add(new Category
                 {
                     Name = "Tecnología",
-                    ProdCategory = new List<ProdCategory>()
+                    ProdCategories = new List<ProdCategory>()
             {
                 new ProdCategory()
                 {
@@ -163,8 +161,6 @@ namespace Sales.API.Data
                 await _context.SaveChangesAsync();
             }
         }
-        
+
     }
 }
-
-
