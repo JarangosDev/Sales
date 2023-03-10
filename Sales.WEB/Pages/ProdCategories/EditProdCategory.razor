@@ -1,0 +1,62 @@
+﻿@page "/prodcategories/edit/{ProdCategoryId:int}"
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+@inject NavigationManager navigationManager
+
+<h3>Editar ProdCategory</h3>
+
+@if (prodCategory is null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <ProdCategoryForm @ref="prodCategoryForm" ProdCategory="prodCategory" OnValidSubmit="EditAsync" ReturnAction="Return" />
+}
+
+@code {
+    private ProdCategory? prodCategory;
+    private ProdCategoryForm? prodCategoryForm;
+
+    [Parameter]
+    public int ProdCategoryId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var responseHttp = await repository.Get<ProdCategory>($"/api/prodcategories/{ProdCategoryId}");
+        if (responseHttp.Error)
+        {
+            if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("/categories");
+                return;
+            }
+
+            var message = await responseHttp.GetErrorMessageAsync();
+            await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+            return;
+        }
+
+        prodCategory = responseHttp.Response;
+    }
+
+    private async Task EditAsync()
+    {
+        var responseHttp = await repository.Put("/api/prodcategories", prodCategory);
+        if (responseHttp.Error)
+        {
+            var message = await responseHttp.GetErrorMessageAsync();
+            await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+            return;
+        }
+
+        Return();
+    }
+
+    private void Return()
+    {
+        prodCategoryForm!.FormPostedSuccessfully = true;
+        navigationManager.NavigateTo($"/categories/details/{prodCategory!.CategoryId}");
+    }
+}
