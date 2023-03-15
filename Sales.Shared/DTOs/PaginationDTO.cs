@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sales.Shared.DTOs
+﻿namespace Sales.Shared.DTOs
 {
-
     public class PaginationDTO
     {
         public int Id { get; set; }
@@ -18,4 +11,3 @@ namespace Sales.Shared.DTOs
         public string? Filter { get; set; }
     }
 }
-
