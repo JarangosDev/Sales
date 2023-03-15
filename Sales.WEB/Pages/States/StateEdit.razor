@@ -3,6 +3,7 @@
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
 <h3>Editar Estado/Departamento</h3>
+@attribute [Authorize(Roles = "Admin")]
 
 
 @if (state is null)
