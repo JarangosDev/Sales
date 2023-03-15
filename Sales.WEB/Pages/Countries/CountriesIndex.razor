@@ -23,16 +23,14 @@
             TotalPages="totalPages"
             SelectedPage="SelectedPageAsync" />
 
-
-<a class="btn btn-primary mb-3" href="/countries/create">Nuevo País</a>
 <GenericList MyList="Countries">
     <Body>
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>País</th>
                     <th style="width:220px">Estados / Departamentos</th>
                     <th style="width:260px"></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -48,7 +46,7 @@
                         <td>
                             <a class="btn btn-info" href="/countries/details/@country.Id">Detalles</a>
                             <a class="btn btn-warning" href="/countries/edit/@country.Id">Editar</a>
-                            <button class="btn btn-danger" @onclick=@(()=> DeleteAsync(country.Id))>Borrar</button>
+                            <button class="btn btn-danger" @onclick=@(() => DeleteAsync(country.Id))>Borrar</button>
                         </td>
                     </tr>
                 }
@@ -70,16 +68,9 @@
     [SupplyParameterFromQuery]
     public string Filter { get; set; } = string.Empty;
 
-
     protected override async Task OnInitializedAsync()
     {
         await LoadAsync();
-    }
-
-    private async Task SelectedPageAsync(int page)
-    {
-        currentPage = page;
-        await LoadAsync(page);
     }
 
     private async Task LoadAsync(int page = 1)
@@ -103,30 +94,47 @@
             url2 = $"api/countries/totalPages?filter={Filter}";
         }
 
+        try
+        {
+
         var responseHppt = await repository.Get<List<Country>>(url1);
         var responseHppt2 = await repository.Get<int>(url2);
         Countries = responseHppt.Response!;
         totalPages = responseHppt2.Response!;
 
+        }
+        catch (Exception ex)
+        {
+            await sweetAlertService.FireAsync("Error", ex.Message, SweetAlertIcon.Error);
+        }
 
     }
-    private async Task DeleteAsync(int Id)
+
+    private async Task SelectedPageAsync(int page)
+    {
+        currentPage = page;
+        await LoadAsync(page);
+    }
+
+    private async Task DeleteAsync(int id)
     {
         var result = await sweetAlertService.FireAsync(new SweetAlertOptions
             {
                 Title = "Confirmación",
-                Text = "¿Realmente desea eliminar el registro?",
+                Text = "¿Realmente deseas eliminar el registro?",
                 Icon = SweetAlertIcon.Question,
                 ShowCancelButton = true,
                 CancelButtonText = "No",
                 ConfirmButtonText = "Si"
             });
+
         var confirm = string.IsNullOrEmpty(result.Value);
         if (confirm)
         {
             return;
         }
-        var responseHttp = await repository.Delete($"/api/countries/{Id}");
+
+        var responseHttp = await repository.Delete($"/api/countries/{id}");
         if (responseHttp.Error)
         {
             if (responseHttp.HttpResponseMessage.StatusCode != HttpStatusCode.NotFound)
@@ -136,6 +144,7 @@
                 return;
             }
         }
+
         await LoadAsync();
     }
 
@@ -151,5 +160,4 @@
         await LoadAsync(page);
         await SelectedPageAsync(page);
     }
-
 }
