@@ -1,7 +1,5 @@
-﻿
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text;
-using Sales.WEB.Repositories.Web.Repositories;
 
 namespace Sales.WEB.Repositories
 {
@@ -17,6 +15,12 @@ namespace Sales.WEB.Repositories
         public Repository(HttpClient httpClient)
         {
             _httpClient = httpClient;
+        }
+
+        public async Task<HttpResponseWrapper<object>> Get(string url)
+        {
+            var responseHTTP = await _httpClient.GetAsync(url);
+            return new HttpResponseWrapper<object>(null, !responseHTTP.IsSuccessStatusCode, responseHTTP);
         }
 
         public async Task<HttpResponseWrapper<T>> Get<T>(string url)
@@ -88,4 +92,3 @@ namespace Sales.WEB.Repositories
         }
     }
 }
-
