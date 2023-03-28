@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Sales.WEB;
 using Sales.WEB.Auth;
 using Sales.WEB.Repositories;
-using Sales.WEB.Repositories.Web.Repositories;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
