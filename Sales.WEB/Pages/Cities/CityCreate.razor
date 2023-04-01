@@ -4,7 +4,7 @@
 @inject SweetAlertService sweetAlertService
 @attribute [Authorize(Roles = "Admin")]
 
-<h3>Crear Estado/Departamento</h3>
+<h3>Crear Ciudad</h3>
 
 <CityForm @ref="cityForm" City="city" OnValidSubmit="CreateAync" ReturnAction="Return" />
 @code {

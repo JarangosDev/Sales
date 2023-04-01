@@ -15,8 +15,9 @@ else
 
     <div class="mb-2" style="display: flex; flex-wrap:wrap; align-items: center;">
         <div>
-            <a class="btn btn-sm btn-primary float-end" @onclick=@(() => ShowModal())><i class="oi oi-plus"></i> Nuevo Estado/Departamento</a>
-            <a class="btn btn-success" href="/countries">Regresar</a>
+
+            <a class="btn btn-primary float-end" @onclick=@(() => ShowModal(country.Id, false))><i class="oi oi-plus"></i> Nuevo Estado/Departamento</a>
+            <a class="btn btn-success " href="/countries">Regresar</a>
         </div>
         <div class="mx-2">
             <input style="width: 400px;" type="text" class="form-control" id="titulo" placeholder="Buscar estado/departamento..." @bind-value="Filter" />
@@ -52,9 +53,9 @@ else
                                 @state.CitiesNumber
                             </td>
                             <td>
-                                <a class="btn btn-info" href="/states/details/@state.Id">Detalles</a>
-                                <a @onclick=@(() => ShowModal(state.Id, true)) class="btn btn-warning"><i class="oi oi-pencil" /> Editar</a>
-                                <button class="btn btn-danger" @onclick=@(() => DeleteAsync(state.Id))>Borrar</button>
+                                <a class="btn btn-info btn-sm" href="/states/details/@state.Id">Detalles</a>
+                                <a @onclick=@(() => ShowModal(state.Id, true)) class="btn btn-warning btn-sm"><i class="oi oi-pencil" /> Editar</a>
+                                <button class="btn btn-danger btn-sm" @onclick=@(() => DeleteAsync(state.Id))>Borrar</button>
                             </td>
                         </tr>
                     }

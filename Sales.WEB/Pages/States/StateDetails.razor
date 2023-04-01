@@ -15,7 +15,7 @@ else
 
     <div class="mb-2" style="display: flex; flex-wrap:wrap; align-items: center;">
         <div>
-            <a class="btn btn-sm btn-primary float-end" @onclick=@(() => ShowModal())><i class="oi oi-plus"></i> Nueva Ciudad</a>
+            <a class="btn btn-primary float-end" @onclick=@(() => ShowModal(state.Id, false))><i class="oi oi-plus"></i> Nueva Ciudad</a>
             <a class="btn btn-success" href="/countries/details/@state.CountryId">Regresar</a>
         </div>
         <div class="mx-2">
@@ -48,8 +48,8 @@ else
                                 @city.Name
                             </td>
                             <td>
-                                <a @onclick=@(() => ShowModal(city.Id, true)) class="btn btn-warning"><i class="oi oi-pencil" /> Editar</a>
-                                <button class="btn btn-danger" @onclick=@(() => DeleteAsync(city.Id))>Borrar</button>
+                                <a @onclick=@(() => ShowModal(city.Id, true)) class="btn btn-warning btn-sm"><i class="oi oi-pencil" /> Editar</a>
+                                <button class="btn btn-danger btn-sm" @onclick=@(() => DeleteAsync(city.Id))>Borrar</button>
                             </td>
                         </tr>
                     }
@@ -101,7 +101,7 @@ else
         }
         else
         {
-            modalReference = Modal.Show<CityCreate>();
+            modalReference = Modal.Show<CityCreate>(string.Empty, new ModalParameters().Add("StateId", id));
         }
 
         var result = await modalReference.Result;
